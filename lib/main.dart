@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:find_mask/viewmodel.store_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
-import 'repository/store_repository.dart';
 import 'model/store.dart';
 
 void main() =>
@@ -30,37 +25,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var isLoading = false;
-  // Future getData() async {
-  //   setState(() {
-  //     isLoading = true; // 다시 한 번 로딩 중임을 표시
-  //   });
-  //   await storeModel.fetch().then((stores) {
-  //     setState(() {
-  //       stores = stores;
-  //     });
-  //   });
-  //   setState(() {
-  //     // 화면에 변화가 생길 때 트리거
-  //     // stores.clear();
-  //     print('getDated!');
-  //     isLoading = false;
-  //   });
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final storeModel = Provider.of<StoreModel>(
@@ -76,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.refresh))
         ],
       ),
-      body: isLoading == true
+      body: storeModel.isLoading == true
           ? loadingWidget()
           : ListView(
               children: storeModel.stores.where((e) {
