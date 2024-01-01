@@ -18,34 +18,42 @@ class StoreRepository {
         "/junsuk5/bb7485d5f70974deee920b8f0cd1e2f0/raw/063f64d9b343120c2cb01a6555cf9b38761b1d94");
 
     // url에 $lat #lng으로 좌표 수정할 수 있음
-    var response = await http.get(url);
+    try {
+      var response = await http.get(url);
 
-    final jsonResult = jsonDecode(utf8.decode(response.bodyBytes));
-    // print(jsonResult['stores']);
+      if (response.statusCode == 200) {
+        final jsonResult = jsonDecode(utf8.decode(response.bodyBytes));
+        // print(jsonResult['stores']);
 
-    final jsonStores = jsonResult['stores'];
-    final stores = <Store>[];
+        final jsonStores = jsonResult['stores'];
+        final stores = <Store>[];
 
-    jsonStores.forEach((e) {
-      final store = Store.fromJson(e);
-      final km = distance.as(
-          LengthUnit.Kilometer,
-          LatLng(store.lat!.toDouble(), store.lng!.toDouble()),
-          LatLng(lat, lng));
-      store.km = km;
+        jsonStores.forEach((e) {
+          final store = Store.fromJson(e);
+          final km = distance.as(
+              LengthUnit.Kilometer,
+              LatLng(store.lat!.toDouble(), store.lng!.toDouble()),
+              LatLng(lat, lng));
+          store.km = km;
 
-      stores.add(store);
-    });
+          stores.add(store);
+        });
 
-    return stores.where((e) {
-      return e.remainStat == 'plenty' ||
-          e.remainStat == 'some' ||
-          e.remainStat == 'few';
-    }).toList()
-    ..sort((a,b)=> a.km!.compareTo(b.km as num)); // filter와 같음
+        return stores.where((e) {
+          return e.remainStat == 'plenty' ||
+              e.remainStat == 'some' ||
+              e.remainStat == 'few';
+        }).toList()
+          ..sort((a, b) => a.km!.compareTo(b.km as num)); // filter와 같음
 
-    // print('Response status: ${response.statusCode}');
-    // print(
-    //     'Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}'); // 이렇게 해야 한글 안 깨짐
+        // print('Response status: ${response.statusCode}');
+        // print(
+        //     'Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}'); // 이렇게 해야 한글 안 깨짐
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
   }
 }
