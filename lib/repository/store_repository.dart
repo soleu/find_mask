@@ -41,7 +41,8 @@ class StoreRepository {
       return e.remainStat == 'plenty' ||
           e.remainStat == 'some' ||
           e.remainStat == 'few';
-    }).toList(); // filter와 같음
+    }).toList()
+    ..sort((a,b)=> a.km!.compareTo(b.km as num)); // filter와 같음
 
     // print('Response status: ${response.statusCode}');
     // print(
