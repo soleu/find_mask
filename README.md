@@ -2,9 +2,25 @@
 
 마스크 찾기 - Flutter 응용 강의 수강
 
-## MVVM 패턴
+## 기능 설명 
 
-: Model - View - ViewModel
+### 마스크 위치 리스트 
+![img_3.png](img_3.png)
+- 현재 위치 기반 거리 순으로 정렬
+- 마스크 재수 당 상태 표시
+- 각 항목을 누르면 해당 좌표 구글 맵으로 이동
+- ![img_4.png](img_4.png)
+
+<br/>
+
+### 예외 처리
+- 인터넷 연결이 안된다면 빈 화면 노출 
+- ![img_2.png](img_2.png)
+
+<hr>
+
+## MVVM 패턴
+->  Model - View - ViewModel
 
 View : 사용자에게 보여지는 UI 부분 (사용자의 동작이나 각종 처리는 ViewModel에 의뢰)
 
@@ -20,7 +36,7 @@ a. ViewModel로 부터 의뢰받은 로직을 처리
 
 b. DB,File,Web 으로 부터 데이터를 가져오거나 전송 등 (Repository)
 
-
+<hr>
 
 ## Flutter에서 ViewModel의 구성
 
@@ -36,4 +52,5 @@ a. ChangeNotifierProvider : 변경을 감지. 위젯 트리의 최상위에 설�
 
 ![img_1.png](img_1.png)
 setState를 사용하지 않아도 됨!!
+
 
