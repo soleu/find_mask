@@ -23,11 +23,7 @@ class MainPage extends StatelessWidget {
           ? loadingWidget()
           : ListView(
               children: storeModel.stores.map((e) {
-                return ListTile(
-                  title: Text(e.name ?? ''),
-                  subtitle: Text(e.addr ?? ''),
-                  trailing: RemainStatListTile(e), // 오른쪽 끝 영역. 위젯같은건 그냥 static 으로 넣음
-                );
+                return RemainStatListTile(e);
               }).toList(),
             ),
     );

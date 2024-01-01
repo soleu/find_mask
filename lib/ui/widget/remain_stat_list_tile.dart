@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../model/store.dart';
 
 class RemainStatListTile extends StatelessWidget {
@@ -9,7 +9,27 @@ class RemainStatListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildRemainStatWidget(store);
+    return ListTile(
+      title: Text(store.name ?? ''),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [Text(store.addr ?? ''), Text('${store.km} km' ?? '')],
+      ),
+      trailing: _buildRemainStatWidget(store),
+      // 오른쪽 끝 영역. 위젯같은건 그냥 static 으로 넣음
+      onTap: () async {
+        await _launchUrl(store.lat, store.lng);
+      },
+    );
+  }
+
+  Future<void> _launchUrl(num? lat, num? lng) async {
+    print(lat);
+    final Uri _url = Uri.parse('https://google.co.kr/maps/place/$lat,$lng');
+
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
   }
 
   Widget _buildRemainStatWidget(Store store) {
@@ -50,5 +70,4 @@ class RemainStatListTile extends StatelessWidget {
       ],
     );
   }
-
 }

@@ -4,6 +4,7 @@ class Store { // 클래스 이름은 대문자, 다트파일은 소문자
   String? createdAt;
   num? lat;  // num == int, double 을 모두 포함
   num? lng;
+  double? km;
   String? name;
   String? remainStat;
   String? stockAt;
