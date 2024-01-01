@@ -17,7 +17,7 @@ class StoreRepository {
     var response = await http.get(url);
 
     final jsonResult = jsonDecode(utf8.decode(response.bodyBytes));
-     // print(jsonResult['stores']);
+    // print(jsonResult['stores']);
 
     final jsonStores = jsonResult['stores'];
     final stores = <Store>[];
@@ -26,7 +26,11 @@ class StoreRepository {
       stores.add(Store.fromJson(e));
     });
 
-    return stores;
+    return stores.where((e) {
+      return e.remainStat == 'plenty' ||
+          e.remainStat == 'some' ||
+          e.remainStat == 'few';
+    }).toList(); // filter와 같음
 
     // print('Response status: ${response.statusCode}');
     // print(
